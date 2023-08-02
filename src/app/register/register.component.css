@@ -1,0 +1,25 @@
+/* custom-styles.css */
+
+/* Styles pour l'image avec des coordonnées personnalisées */
+.img-fluid {
+   
+    top: 90px; /* Ajustez la valeur de 'top' selon la position verticale souhaitée */
+    left: 200px; /* Ajustez la valeur de 'left' selon la position horizontale souhaitée */
+    height: 280px;
+    width: 280px;
+  }
+  .alert-danger{
+  
+    font-size: 13px;
+    font-weight: bold;
+    padding: 9px;
+ 
+}
+.custom-section {
+position: fixed;
+left: 38px;
+}
+
+
+
+  

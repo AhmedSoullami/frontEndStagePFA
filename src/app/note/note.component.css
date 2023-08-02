@@ -1,0 +1,66 @@
+.container {
+    
+    justify-content: center;
+  
+
+  }
+  
+  /* Add any other styling for the elements as needed */
+  .note {
+   text-shadow: 2px 2px gray;
+   font-size: 3rem;
+   text-align: center;
+   padding-top: 2rem;
+  }
+  
+  .form-group {
+width: 50%;
+margin-left: 25%;;
+  }
+  .myimage {
+    margin-bottom: 20px; /* Optional spacing between the image and the form groups */
+  }
+
+
+  
+  
+  .image {
+    width: 80px; /* Set the desired width here */
+    height: auto; /* To maintain the aspect ratio of the image */
+    /* Alternatively, you can set both width and height for a fixed-size image:
+    width: 300px;
+    height: 200px;
+    */
+  }
+  
+ /* Modify the size and position of the table */
+.table.table-success {
+    width: 80%; /* Set the desired width of the table, e.g., 80% */
+    margin: 0 auto; /* To center the table horizontally, adjust the margin as needed */
+    top: 50%;
+  }
+  
+  /* Optional: Modify the size of the table cells */
+  .table.table-success th,
+  .table.table-success td {
+    font-size: 16px; /* Set the desired font size for the table cells */
+  }
+  
+  /* Optional: Modify the size of the delete button */
+  .btn.btn-danger {
+    font-size: 12px; /* Set the desired font size for the button */
+    padding: 5px 10px; /* Adjust the padding as needed */
+  }
+  .btn.btn-warning {
+    font-size: 12px; /* Set the desired font size for the button */
+    padding: 5px 10px; /* Adjust the padding as needed */
+  }
+  .btn.btn-primary {
+    font-size: 12px; /* Set the desired font size for the button */
+    padding: 5px 10px; /* Adjust the padding as needed */
+    width: 555px;
+    margin-top: 15px; /* Add space above the button */
+    
+  }
+
+  
