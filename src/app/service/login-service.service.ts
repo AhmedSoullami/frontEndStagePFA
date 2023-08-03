@@ -16,11 +16,12 @@ export class LoginServiceService {
      )
     };
 
-    let params = new HttpParams()
-      .set("email", email)
-      .set("password", password);
-      console.log(params)
+    let data = {
+      email: email,
+      password: password
+    };
+  console.log(data)
 
-    return this.http.post("http://localhost:8081/auth/login", JSON.stringify(params), options);
+    return this.http.post("http://localhost:8081/auth/login", data, options);
   }
 }
