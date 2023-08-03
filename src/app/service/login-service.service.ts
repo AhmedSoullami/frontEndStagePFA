@@ -1,27 +1,29 @@
-import { HttpClient, HttpParams,HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../entities/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginServiceService {
-  isAuthenticated:boolean=false;
-  username:any;
-  accessToken!:string
+  isAuthenticated: boolean = false;
+  username: any;
+  accessToken!: string;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
   login(email: string, password: string) {
     let options = {
-      headers: new HttpHeaders().set("Content-type", "application/json").set("Access-Control-Allow-Origin","http://localhost:4200"
-     )
+      headers: new HttpHeaders()
+        .set('Content-type', 'application/json')
+        .set('Access-Control-Allow-Origin', 'http://localhost:4200'),
     };
 
-    let data = {
-      email: email,
-      password: password
-    };
-  console.log(data)
-
-    return this.http.post("http://localhost:8081/auth/login", data, options);
+    let user = new User(email, password);
+    console.log(user);
+    return this.http.post(
+      'http://localhost:8081/auth/login',
+      JSON.stringify(user),
+      options
+    );
   }
 }
