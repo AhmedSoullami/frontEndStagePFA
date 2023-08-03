@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
 })
 export class RegisterService {
 
-  constructor(private httpC:HttpClient) { }
-  register(username:string,email:string,passowrd:string){
+  constructor(private httpC: HttpClient) { }
+
+  register(username: string, email: string, password: string) {
     let options = {
       headers: new HttpHeaders({
         "Content-type": "application/json",
@@ -15,12 +16,14 @@ export class RegisterService {
       })
     };
 
-    let params = new HttpParams()
-      .set("username",username)
-      .set("email", email)
-      .set("password",passowrd)
-    console.log(params)
-    return this.httpC.post("http://localhost:8081/user/register", JSON.stringify(params), options);
+    let data = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    return this.httpC.post("http://localhost:8081/user/register", data, options);
   }
-  }
+}
+  
 

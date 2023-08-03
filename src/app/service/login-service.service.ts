@@ -19,6 +19,7 @@ export class LoginServiceService {
     let params = new HttpParams()
       .set("email", email)
       .set("password", password);
+      console.log(params)
 
     return this.http.post("http://localhost:8081/auth/login", JSON.stringify(params), options);
   }
