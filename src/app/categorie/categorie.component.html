@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        
+        <h2 class="categorie">Categories <img class="imageC" src="../../assets/login/imageC.png"></h2>
+  
+        <table class="table table-striped">
+          
+  <thead>
+    <tr>
+     
+      <th>Nom de la catégorie</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let categorie of categories">
+      <td>{{categorie.nomCategorie}}</td>
+      <td>
+        <button class="btn btn-warning">Modifier</button>
+        <button class="btn btn-primary" >Voir Note</button>
+      </td>
+    </tr>
+  
+  </tbody>
+        </table>
+      </div>
+            <div class="col-md-4 form-container">
+                <h3>Ajouter une catégorie</h3>
+                <form (ngSubmit)="createCategorie()">
+                  <div class="form-group custom-input">
+                    <label>Nom de la catégorie:</label>
+                    <input type="text" class="form-control" [(ngModel)]="nomCategorie" name="nomCategorie" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">Ajouter</button>
+                </form>
+            </div>
+      </div>
+    </div>
+
+  
+  
+
+

@@ -1,13 +1,16 @@
 import { HttpClient, HttpParams,HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServiceService {
+  
   isAuthenticated:boolean=false;
-  username:any;
+  email:any;
   accessToken!:string
+  idUser!:any
 
   constructor(private http:HttpClient) { }
   login(email: string, password: string) {
@@ -20,8 +23,29 @@ export class LoginServiceService {
       email: email,
       password: password
     };
-  console.log(data)
+  
 
     return this.http.post("http://localhost:8081/auth/login", data, options);
   }
+  saveToken(data: any) {
+    this.isAuthenticated=true;
+     return this.accessToken=data['accessToken'];
+    
+  }
+  getUserIdFromToken(): number | null {
+    try {
+      const decodedToken: any = jwtDecode(this.accessToken);
+      if (decodedToken && decodedToken.sub) {
+        const userId = decodedToken.sub.split(',')[0];
+        console.log(userId)
+        return userId;
+      }
+    } catch (error) {
+      console.error('erreur decode token:', error);
+    }
+    return null;
+  }
+  
+
+  
 }

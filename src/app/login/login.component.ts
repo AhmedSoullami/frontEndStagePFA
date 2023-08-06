@@ -1,6 +1,7 @@
 import { Component,OnInit, Output,EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoginServiceService } from '../service/login-service.service';
+import { Route, Router } from '@angular/router';
+import { LoginServiceService } from 'src/app/service/login-service.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { LoginServiceService } from '../service/login-service.service';
 
 export class LoginComponent implements OnInit{
    formLogin!:FormGroup;
-   constructor(private fb:FormBuilder,private loginServ:LoginServiceService){}
+   constructor(private fb:FormBuilder,private loginServ:LoginServiceService,private router:Router){}
   
   onSubmit() {
   
@@ -30,11 +31,14 @@ export class LoginComponent implements OnInit{
     let password = this.formLogin.value.password;
     this.loginServ.login(email,password).subscribe({
       next:data=>{
-           console.log(data)
+           this.loginServ.saveToken(data)
+           this.loginServ.getUserIdFromToken()
+           this.router.navigateByUrl("/categorie")
       },
       error: err=>{
                console.log(err)
       }
     })
    }
+   
 }

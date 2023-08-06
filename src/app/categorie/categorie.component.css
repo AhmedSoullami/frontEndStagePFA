@@ -1,0 +1,19 @@
+.imageC{
+    width: 60px;
+    height: auto;
+   
+  }
+  .form-container {
+    margin-top: 110px;
+    margin-bottom: 30px;
+    padding-left: 10px;
+  }
+  
+  .custom-input input {
+    
+  }
+  .categorie{
+    justify-content: center;
+    align-items: center;
+  }
+  

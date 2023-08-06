@@ -11,6 +11,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NoteComponent } from './note/note.component';
+import { CategorieComponent } from './categorie/categorie.component';
+import { isAuthenticationGuard } from './guards/authentication-guard.guard';
+import { AuthenticationGuard } from './guards/authentication-guard.guard';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -20,7 +23,8 @@ path:'',
 redirectTo:'/login',
 pathMatch:'full'
 },
-{path: 'note',component:NoteComponent} 
+{path: 'note',component:NoteComponent},
+{path:'categorie',component:CategorieComponent,canActivate:[isAuthenticationGuard]}
 ];
 
 @NgModule({
@@ -29,6 +33,7 @@ pathMatch:'full'
     LoginComponent,
     RegisterComponent,
     NoteComponent,
+    CategorieComponent,
     
    
   ],
@@ -40,7 +45,7 @@ pathMatch:'full'
     MatButtonModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
