@@ -1,67 +1,52 @@
-<form>
 <div class="container">
+ 
     <div class="myimage">
       <h1 class="note">Liste des notes
         <img class="image" src="../../assets/login/notes.png" alt="Image description">
       </h1>
     </div>
     
+    <form [formGroup]="noteForm" (ngSubmit)="createNote()">
     <div class="form-group class1">
       <label for="label_1">Entrez la clé du note</label>
-      <input type="text" class="form-control" name="cle" id="label_1" area-describedby="helpId" placeholder="Clé du note">
+      <input formControlName="cle" type="text" class="form-control" name="cle"  placeholder="Clé du note" required>
     </div>
     
     <div class="form-group class2">
       <label for="label_2">Entrez la valeur du note</label>
-      <input type="text" class="form-control" name="cle" id="label_2" area-describedby="helpId" placeholder="valeur du note">
+      <input formControlName="valeur" type="text" class="form-control" name="valeur"  placeholder="valeur du note" required>
     </div>
  
-
-  </div>
-  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 ">
-    <button type="button" class="btn btn-primary">Add</button>  </div>
-
+    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  
 </form>
 
 <table class="table table-success">
-    <thead>
-      <tr>
-       
-        <th>Cle du Note</th>
-        <th>Valeur du note</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-    
-        <td>Adresse IP</td>
-        <td>192.168.0.1</td>
-        <td><button type="button" class="btn btn-danger">Delete</button>
-         <button type="button" class="btn btn-warning">Modify</button>
-
-        </td>
-        <tr>
-    
-          <td>Securité</td>
-          <td>DHCP</td>
-          <td><button type="button" class="btn btn-danger">Delete</button>
-           <button type="button" class="btn btn-warning">Modify</button>
-  
-          </td>
-
-      </tr>
-      <tr>
-    
-        <td>Securité</td>
-        <td>DHCP</td>
-        <td><button type="button" class="btn btn-danger">Delete</button>
-         <button type="button" class="btn btn-warning">Modify</button>
-
-        </td>
-
+  <thead>
+    <tr>
+      <th>Cle du Note</th>
+      <th>Valeur du note</th>
+      <th>Action</th>
     </tr>
-
-    </tbody>
-  </table>
-  
+  </thead>
+  <tbody>
+    <tr *ngFor="let note of displayedNotes as Note">
+      <td>{{ note.cle }}</td>
+      <td>{{ note.valeur }}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="SupprimerNote(note.id)">Supprimer</button>
+        <button type="button" class="btn btn-warning" (click)="ModifierNote(note.id)">Modifier</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<mat-paginator
+  [length]="notes?.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onPageChange($event)"
+  pageSizeLabel="notes"
+></mat-paginator>
+</div>

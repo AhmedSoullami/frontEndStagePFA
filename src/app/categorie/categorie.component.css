@@ -1,3 +1,4 @@
+
 .imageC{
     width: 60px;
     height: auto;
@@ -15,5 +16,11 @@
   .categorie{
     justify-content: center;
     align-items: center;
+  }
+  .custom-button {
+    position: absolute;
+    top: 20px; /* Ajustez cette valeur pour définir la distance depuis le haut */
+    left: 1050px; /* Ajustez cette valeur pour définir la distance depuis la gauche */
+    z-index: 1;
   }
   
