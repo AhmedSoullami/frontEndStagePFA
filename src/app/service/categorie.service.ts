@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { HttpClient ,HttpHeaders, HttpParams} from '@angular/common/http';
 import { LoginServiceService } from './login-service.service';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -20,8 +20,9 @@ export class CategorieService {
 
   getCategorieByUserId() {
     this.userId = this.loginService.getUserIdFromToken();
-    return this.httpcategorie.get(`http://localhost:8081/categorie/categories/${this.userId}`);
+    return this.httpcategorie.get<any[]>(`http://localhost:8081/categorie/categories/${this.userId}`);
   }
+
  
 
 createCategorie(nomCategorie: string): Observable<any> {
@@ -48,5 +49,16 @@ updateCategorie(id:number|null,nomCategorie:string): Observable<any>{
 deleteCategorie(id:number){
 return this.httpcategorie.delete(`http://localhost:8081/categorie/deleteCategorie/${id}`)
 }
+getNombreCategorieUtilisateurConnecte(): Observable<number> {
+  return this.getCategorieByUserId().pipe(
+    map((categories: any[]) => categories.length as number)
+  );
+}
+findCategorie(nomCategorie: string): Observable<any[]> {
+  const params = new HttpParams().set('nomCategorie', nomCategorie);
+  
+  return this.httpcategorie.get<any[]>('http://localhost:8081/categorie/rechercher', { params });
+}
+
 
 }

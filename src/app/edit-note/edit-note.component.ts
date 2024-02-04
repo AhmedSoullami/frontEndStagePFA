@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup ,Validators} from '@angular/forms';
 import { PartageIdNoteService } from '../service/partage-id-note.service';
 import { NoteService } from '../service/note.service';
 import { Router } from '@angular/router';
@@ -12,22 +12,45 @@ import Swal from 'sweetalert2';
 export class EditNoteComponent {
   NoteForm!:FormGroup
   id!:number
+  ancienCle!:string;
+  ancienneValeur!:string;
+  
+  notes!:any;
   constructor(private router:Router,private formBuilder:FormBuilder,private partageIdNoteService:PartageIdNoteService,private noteService:NoteService){}
   ngOnInit(): void {
-    this.NoteForm = this.formBuilder.group({
-      cle:'' ,
-      valeur:''
-    });
+   
+    
   
     this.partageIdNoteService.id.subscribe(id => {
       this.id = id;
       console.log(id)
     });
+    const idNote=this.partageIdNoteService.getIdNote();
+    this.noteService.getNoteById(this.id).subscribe({
+      next: (data) => {
+       this.notes=data;
+       const noteToEdit=this.notes
+       if(noteToEdit){
+       this.ancienCle = noteToEdit.cle;
+       this.ancienneValeur = noteToEdit.valeur;}
+      },
+      error: (error) => {
+        console.error("Erreur lors de la récupération de la note :", error);
+      }
+    });
+    this.NoteForm = this.formBuilder.group({
+      cle:[this.ancienCle,Validators.required] ,
+      valeur:[this.ancienneValeur,Validators.required],
+      newcle:['',Validators.required],
+      newvaleur:['',Validators.required]
+    });
+  
   }
 
   Modifier() {
-    const cle = this.NoteForm.value.cle;
-    const valeur = this.NoteForm.value.valeur;
+   
+    const newCle = this.NoteForm.value.newcle;
+    const newValeur = this.NoteForm.value.newvaleur;
   
     Swal.fire({
       title: 'Confirmation',
@@ -38,7 +61,7 @@ export class EditNoteComponent {
       cancelButtonText: 'Annuler'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.noteService.updateNote(this.id, cle, valeur).subscribe({
+        this.noteService.updateNote(this.id, newCle, newValeur).subscribe({
           next: (data) => {
             console.log(data)
             Swal.fire('Succès', 'Modifications enregistrées avec succès', 'success');
@@ -49,9 +72,10 @@ export class EditNoteComponent {
     });
   }
   
+  
 annulerModification(){
   
-    this.router.navigateByUrl('/categorie')
+    this.router.navigateByUrl('/note')
 }
 
 }

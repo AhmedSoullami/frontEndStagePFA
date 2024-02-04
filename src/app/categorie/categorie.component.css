@@ -10,17 +10,66 @@
     padding-left: 10px;
   }
   
-  .custom-input input {
-    
+  .rounded-circle {
+    margin-left: 30px;
+    border-radius: 80%; 
+    width: 80px; 
+    height: 60px; 
+    object-fit: cover; 
   }
-  .categorie{
-    justify-content: center;
-    align-items: center;
+  .btn1{
+    padding: 7px 20px;
+    background-color: rgba(0, 136, 160, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-right: 13px;
+    box-shadow: 0 0 5px  rgb(242, 250, 252),0 0 25px rgb(242, 250, 252);
+
   }
+  .btn1:hover{
+    box-shadow: 0 0 5px   rgb(242, 250, 252),0 0 25px  rgb(242, 250, 252),
+    0 0 50px  rgb(242, 250, 252),0 0 100px  rgb(242, 250, 252);
+  }
+  .monNavButton{
+    margin-left: 880px;
+  }
+
+  
   .custom-button {
     position: absolute;
-    top: 20px; /* Ajustez cette valeur pour définir la distance depuis le haut */
-    left: 1050px; /* Ajustez cette valeur pour définir la distance depuis la gauche */
+    top: 20px; 
+    left: 1050px; 
     z-index: 1;
   }
+ 
+  .custom-image {
+    position: relative;
+    left: 20px;
+    top: 140px;
+    border-radius: 10%;
+    border: 1px solid;
+    animation: rotate 3s linear infinite;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+ 
+
+
+.input-button {
+ 
+  margin-right: 5px; 
+  font-size: 14px; 
+  
+}
+
+
   

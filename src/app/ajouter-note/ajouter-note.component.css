@@ -1,0 +1,38 @@
+.container {
+    
+    justify-content: center;
+  
+
+  }
+  .note {
+    text-shadow: 2px 2px gray;
+    font-size: 3rem;
+    text-align: center;
+    padding-top: 2rem;
+   }
+   
+   .form-group {
+ width: 50%;
+ margin-left: 25%;;
+   }
+.image {
+    width: 80px; 
+    height: auto; 
+    margin-left: 53px;
+    margin-top: 22px;
+  }
+  .custom-input {
+    width: 470px; 
+    margin-left: 80px
+  }
+  .btn.btn-outline-primary{
+    margin-left: 80px;
+    margin-right: 310px;
+  }
+
+
+  
+
+  
+  
+  

@@ -14,23 +14,29 @@
                 </div>
                 
                 <form [formGroup]="categorieForm" (ngSubmit)="Enregister()">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 custom-input">
                     
-                    <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer l'ancien nom de la categorie">
+                    <input type="text" class="form-control form-control-lg bg-light fs-6" [value]="oldCategoryName" readonly>
                     
                 </div>
-                <div class="input-group mb-1">
+                <div class="input-group mb-1 custom-input">
                     
                     <input formControlName="nouveauNmCategorie" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer le neuveau nom de la categorie">
+                   
                 </div>
+                <div *ngIf="categorieForm.get('nouveauNmCategorie')?.hasError('required') && categorieForm.get('nouveauNmCategorie')?.touched" class="text-danger">
+                    
+                        Le nouveau nom de la catégorie ne peut pas être vide.
+                    
+                   
+            </div>
                 <div class="input-group mb-3 d-flex justify-content-between">   
                 </div>
-                <div class="input-group mb-3">
-                    <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Enregister</button>
-                </div>
-                <div class="input-group mb-3">
-                    <button class="btn btn-lg btn-secondary w-100 fs-6" (click)="annulerModification()">annuler</button>
-                </div>
+               
+                <div class="d-flex mb-5">
+                    <button type="submit" class="btn btn-primary Input">Enregister</button>
+                    <button class="btn btn-warning" (click)="annulerModification()">Annuler</button>
+                  </div>
                 </form>
                 
           </div>

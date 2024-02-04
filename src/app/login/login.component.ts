@@ -37,15 +37,13 @@ export class LoginComponent implements OnInit{
            this.loginServ.getUserIdFromToken()
            console.log("*******")
            console.log(data)
-           this.loginServ.getTimeExpiration()
+           
            this.router.navigateByUrl("/categorie")
       },
       error: err => {
         if (err.status === 401) {
           Swal.fire('Erreur', 'Mot de passe incorrect.', 'error');
-        } else {
-          console.log(err);
-        }
+        } 
       }
     })
 

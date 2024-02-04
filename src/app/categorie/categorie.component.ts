@@ -17,10 +17,15 @@ export class CategorieComponent implements OnInit {
   categorieForm!: FormGroup;
   categories: any;
   categoryExists:boolean=false;
+  nomCategorieColor!:string
   displayedCategories: any[] = [];
-  pageSizeOptions: number[] = [5, 10, 25];
+  pageSizeOptions: number[] = [3, 6, 9];
   currentPage = 0;
   pageSize = this.pageSizeOptions[0];
+  ancienNomCategorie: string | null = null;
+  nomCategorieRecherche: string = '';
+ 
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
  
   constructor(private categorieService: CategorieService,private loginService:LoginServiceService,private formBuilder: FormBuilder,private route: ActivatedRoute
@@ -57,40 +62,24 @@ export class CategorieComponent implements OnInit {
       this.updateDisplayedCategories();
     }
     
-      
-    createCategorie() {
-      const nomCategorie = this.categorieForm.value.nomCategorie;
-      if (this.categorieForm.invalid) {
-        return; 
-      }
-      this.categoryExists = this.displayedCategories.some(category => category.nomCategorie === nomCategorie);
-      if (this.categoryExists) {
-        Swal.fire({
-          html: `La catégorie <span style="color: green; font-weight: bold;">${nomCategorie}</span> est deja exist`,
-          icon: 'success'
-        });
-      }
-      this.categorieService.createCategorie(nomCategorie)
-        .subscribe({
-          next: data => {
-            console.log('Catégorie créée avec succès:', data);
-            Swal.fire({
-              html: `La catégorie <span style="color: green; font-weight: bold;">${nomCategorie}</span> est bien ajoutée`,
-              icon: 'success'
-            });
-    
-            this.displayedCategories.push(data);
-            this.categorieForm.reset();
-          },
-          error: err => {
-            console.error('Erreur lors de la création de la catégorie:', err);
-          }
-        });
+
+  
+    onAjouter(){
+      this.router.navigateByUrl("/ajouterCategorie")
     }
-      onEdit(id: number) {
-        this.categorieDataSharingService.setIdCategorie(id);
-        this.router.navigateByUrl("/editCategorie");
-      }  
+  
+    
+    onEdit(id: number) {
+      if (this.categories) {
+        const categoryToEdit = this.categories.find((cat: any) => cat.id === id);
+        if (categoryToEdit) {
+          this.ancienNomCategorie = categoryToEdit.nomCategorie;
+          this.categorieDataSharingService.setIdCategorie(id);
+          this.router.navigateByUrl("/editCategorie");
+        }
+      }
+    }
+    
       VoirNotes(id: number){
         this.categorieDataSharingService.setIdCategorie(id);
         console.log("voir notes")
@@ -123,7 +112,6 @@ export class CategorieComponent implements OnInit {
             this.categorieService.deleteCategorie(id).subscribe({
               next: () => {
                 Swal.fire('Succès', 'Catégorie supprimée avec succès', 'success');
-                // Mettre à jour la liste des catégories après suppression
                 this.miseAJourCategoriesApresSuppression(id);
               },
               error: (error) => {
@@ -135,11 +123,38 @@ export class CategorieComponent implements OnInit {
       }
       
       private miseAJourCategoriesApresSuppression(idSupprime: number) {
-        // Filtrer la liste des catégories pour exclure la catégorie supprimée
         this.categories = this.categories.filter((cat: any) => cat.id !== idSupprime);
-        // Mettre à jour les catégories affichées
         this.updateDisplayedCategories();
       }
+      Profile(){
+           this.router.navigateByUrl('/profile')
+      }
+      rechercherCategorie() {
+        if (this.nomCategorieRecherche) {
+          this.categorieService.findCategorie(this.nomCategorieRecherche).subscribe({
+            next: (resultats) => {
+              if (resultats.length > 0) {
+                this.nomCategorieColor="green"
+                const categorieRecherchee = resultats[0]; 
+                const autresCategories = this.categories.filter((cat: any)  => cat.id !== categorieRecherchee.id); 
+                this.categories = [categorieRecherchee, ...autresCategories];
+      
+                this.updateDisplayedCategories();
+                
+              } else {
+                Swal.fire('Aucun résultat', 'Aucune catégorie trouvée avec ce nom', 'info');
+              }
+            },
+            error: (error) => {
+              console.error('Erreur lors de la recherche de la catégorie :', error);
+            }
+          });
+        } else {
+          
+          Swal.fire('Champ vide', 'Veuillez entrer un nom de catégorie pour rechercher', 'warning');
+        }
+      }
+      
       
       
   }

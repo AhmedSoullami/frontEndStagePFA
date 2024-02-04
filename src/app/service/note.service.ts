@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { HttpClient ,HttpHeaders,HttpParams} from '@angular/common/http';
 import { CategorieDataSharingService } from './partage-data.service';
 import { Note } from '../model/note.model';
 import { Observable } from 'rxjs';
@@ -44,5 +44,13 @@ export class NoteService {
     };
     return this.httpClientNotes.put(url, noteData, httpOptions)
   }
+  getNoteById(id: number): Observable<Note> {
+    return this.httpClientNotes.get<Note>(`http://localhost:8081/note/getNote/${id}`);
+  }
+  rechercheNote(cleRecherche: string): Observable<Note[]>{
+    const params = new HttpParams().set('cleRecherche', cleRecherche);
+    return this.httpClientNotes.get<any[]>('http://localhost:8081/note/rechercher',{params})
+  }
+ 
   
 }

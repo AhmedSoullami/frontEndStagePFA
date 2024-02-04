@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder ,Validators} from '@angular/forms';
 import { CategorieService } from '../service/categorie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -16,8 +16,9 @@ export class EditCategorieComponent implements OnInit {
   categorieForm!: FormGroup;
   nouveauNmCategorie!: string;
   id!:number;
- 
+  ancienNomCategorie!:string
   categories: any;
+  oldCategoryName!:string|null;
   constructor(
     private formBuilder: FormBuilder,
     private categorieService: CategorieService,
@@ -26,15 +27,31 @@ export class EditCategorieComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categorieForm = this.formBuilder.group({
-      nouveauNmCategorie: ''
+    const categoryId = this.categorieDataSharingService.getIdCategorie();
+    this.categorieService.getCategorieByUserId().subscribe({
+      next: (data) => {
+        this.categories = data;
+        const categoryToEdit = this.categories.find((cat: any) => cat.id === categoryId);
+        if (categoryToEdit) {
+          this.oldCategoryName = categoryToEdit.nomCategorie;
+        }
+        
+      },
+      error: (err) => {
+        console.log(err);
+      }
     });
-  
+    this.categorieForm = this.formBuilder.group({
+      nomCategorie: [this.oldCategoryName, Validators.required],
+      nouveauNmCategorie: ['', Validators.required],
+    });
+    
     this.categorieDataSharingService.id.subscribe(id => {
       this.id = id;
-      console.log(id)
+      console.log(id);
     });
   }
+  
   
 
   annulerModification() {
@@ -43,7 +60,17 @@ export class EditCategorieComponent implements OnInit {
   }
   Enregister() {
     const nouveauNmCategorie = this.categorieForm.value.nouveauNmCategorie;
-
+    if (nouveauNmCategorie === this.oldCategoryName) {
+      Swal.fire("le nom du categorie deja existe")
+      this.categorieForm = this.formBuilder.group({
+      nouveauNmCategorie: ''
+      })
+      return;
+    }
+    else if(nouveauNmCategorie ===""){
+      Swal.fire("le nom du categorie ne peut pas etre vide")
+      return;
+    }
     Swal.fire({
       title: 'Confirmation',
       text: 'Voulez-vous vraiment enregistrer les modifications ?',

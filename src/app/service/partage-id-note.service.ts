@@ -4,7 +4,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class PartageIdNoteService {
-
+  private ancienneCle: string | null = null;
+  private ancienneValeur: string | null = null;
   private idNoteSource = new BehaviorSubject<number>(0);
   id = this.idNoteSource.asObservable();
 
@@ -13,5 +14,13 @@ export class PartageIdNoteService {
   }
   getIdNote(){
     return this.idNoteSource.value;
+  }
+  setAnciennesValeurs(cle: string, valeur: string) {
+    this.ancienneCle = cle;
+    this.ancienneValeur = valeur;
+  }
+
+  getAnciennesValeurs() {
+    return { ancienneCle: this.ancienneCle, ancienneValeur: this.ancienneValeur };
   }
 }

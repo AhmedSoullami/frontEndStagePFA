@@ -17,8 +17,13 @@ import { AuthenticationGuard } from './guards/authentication-guard.guard';
 import { EditCategorieComponent } from './edit-categorie/edit-categorie.component';
 import { EditNoteComponent } from './edit-note/edit-note.component';
 import { TokenExpireInterceptor } from './interceptors/expired-token.interceptor';
+import { LoginServiceService } from './service/login-service.service';
 
-
+import { TokenExpireService } from './service/token-expire.service';
+import { AjouterNoteComponent } from './ajouter-note/ajouter-note.component';
+import { AjouterCategorieComponent } from './ajouter-categorie/ajouter-categorie.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
+import { ChangerPasswordComponent } from './changer-password/changer-password.component';
 
 const routes: Routes = [
 { path: 'register', component: RegisterComponent },
@@ -32,8 +37,11 @@ pathMatch:'full'
 {path:'categorie',component:CategorieComponent,canActivate:[isAuthenticationGuard]},
 {path:'editCategorie',component:EditCategorieComponent,canActivate:[isAuthenticationGuard]},
 {path: 'note',component:NoteComponent,canActivate:[isAuthenticationGuard]},
-{path:'editNote',component:EditNoteComponent,canActivate:[isAuthenticationGuard]}
-
+{path:'editNote',component:EditNoteComponent,canActivate:[isAuthenticationGuard]},
+{path:'ajouterNote',component:AjouterNoteComponent,canActivate:[isAuthenticationGuard]},
+{path:'ajouterCategorie',component:AjouterCategorieComponent,canActivate:[isAuthenticationGuard]},
+{path:'profile',component:ProfileUserComponent,canActivate:[isAuthenticationGuard]},
+{path:'changerPassword',component:ChangerPasswordComponent,canActivate:[isAuthenticationGuard]}
 ]
 
 @NgModule({
@@ -44,7 +52,11 @@ pathMatch:'full'
     NoteComponent,
     CategorieComponent,
     EditCategorieComponent,
-    EditNoteComponent
+    EditNoteComponent,
+    AjouterNoteComponent,
+    AjouterCategorieComponent,
+    ProfileUserComponent,
+    ChangerPasswordComponent
   ],
   imports: [
     HttpClientModule,
@@ -57,7 +69,7 @@ pathMatch:'full'
     BrowserAnimationsModule
   ],
 
-  providers: [AuthenticationGuard,CategorieComponent,NoteComponent,{
+  providers: [AuthenticationGuard,CategorieComponent,NoteComponent,LoginServiceService,TokenExpireService,{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenExpireInterceptor,
     multi: true

@@ -53,6 +53,9 @@ export class LoginServiceService {
     }
     return null;
   }
+  getAccessToken(): string | null {
+    return this.accessToken;
+  }
   getTimeExpiration():number|null{
     const decodedToken: any = jwtDecode(this.accessToken);
     if (decodedToken && decodedToken.exp) {
@@ -60,6 +63,28 @@ export class LoginServiceService {
         return timeTokenExpiration;
     } 
     else return null
+}
+getUserInfoFromToken(): any {
+  try {
+    const decodedToken: any = jwtDecode(this.accessToken);
+    return decodedToken;
+  } catch (error) {
+    console.error('Erreur lors du décodage du token :', error);
+    return null;
+  }
+  
+}
+changePassword(oldPassword: string, newPassword: string) {
+  const data = {
+    oldPassword: oldPassword,
+    newPassword: newPassword
+  };
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + this.accessToken
+  });
+
+  return this.http.post("http://localhost:8081/auth/changePassword", data, { headers });
 }
 
 

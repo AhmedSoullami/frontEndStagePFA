@@ -12,7 +12,7 @@
                     <input formControlName="username" class="form-control " placeholder="Name" />
                     <div *ngIf="formRegister.get('username')?.invalid && (formRegister.get('username')?.dirty || formRegister.get('username')?.touched)">
                       <div *ngIf="formRegister.get('username')?.hasError('required')" class="text-danger">
-                        Name is required.
+                        le nom est obligatoire
                       </div>
                     </div>
                   </div>
@@ -20,7 +20,7 @@
                     <input formControlName="email" type="email" class="form-control " placeholder="Email" />
                     <div *ngIf="formRegister.get('email')?.invalid && (formRegister.get('email')?.dirty || formRegister.get('email')?.touched)">
                       <div *ngIf="formRegister.get('email')?.hasError('required')" class="text-danger">
-                        Email is required.
+                        Email est obligatoire.
                       </div>
                       <div *ngIf="formRegister.get('email')?.hasError('email')" class="text-danger">
                         Please enter a valid email address.
@@ -31,7 +31,7 @@
                     <input formControlName="password" type="password" class="form-control " placeholder="Password" />
                     <div *ngIf="formRegister.get('password')?.invalid && (formRegister.get('password')?.dirty || formRegister.get('password')?.touched)">
                       <div *ngIf="formRegister.get('password')?.hasError('required')" class="text-danger">
-                        Password is required.
+                        mot de passe est obligatoire.
                       </div>
                     </div>
                   </div>
@@ -39,7 +39,7 @@
                     <input formControlName="password2" type="password" class="form-control " placeholder="Repeat your password" />
                     <div *ngIf="formRegister.get('password2')?.invalid && (formRegister.get('password2')?.dirty || formRegister.get('password2')?.touched)">
                       <div *ngIf="formRegister.get('password2')?.hasError('required')" class="text-danger">
-                        Please confirm your password.
+                         confirmer le mot de passe.
                       </div>
                     </div>
                   </div>

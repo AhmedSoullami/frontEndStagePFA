@@ -18,8 +18,13 @@ export class NoteComponent implements OnInit {
   id!: number;
   noteForm!: FormGroup;
   idNote!: number;
+  oldCle!:string;
+  oldValeur!:string;
+  cleColor!: string ;
+  valeurColor!: string 
+  cleRecherche!:string
   displayedNotes: any[] = [];
-  pageSizeOptions: number[] = [3, 5, 7];
+  pageSizeOptions: number[] = [5, 10, 15];
   currentPage = 0;
   pageSize = this.pageSizeOptions[0];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -64,26 +69,7 @@ export class NoteComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.updateDisplayeNotes();
   }
-  createNote() {
-    const cle = this.noteForm.value.cle;
-    const valeur = this.noteForm.value.valeur;
-    console.log(cle);
-    console.log(valeur);
-    console.log(this.id);
 
-    this.noteService.AjouterNote(cle, valeur, this.id).subscribe({
-      next: (data: Note) => {
-        Swal.fire({
-          html: `Note avec le clé: <span style="color: red; font-weight: bold;">${cle}</span> et la valeur: <span style="color: red; font-weight: bold;">${valeur}</span> est bien ajoutée`,
-          icon: 'success'
-        });
-        
-        
-        this.displayedNotes.push(data);
-        this.noteForm.reset();
-      }
-    });
-  }
   SupprimerNote(id: number) {
     Swal.fire({
       title: 'Confirmation',
@@ -119,10 +105,47 @@ export class NoteComponent implements OnInit {
     });
   }
   ModifierNote(id:number){
-    this.partageIdNoteService.setIdNoteid(id)
-    this.router.navigateByUrl("/editNote");
+    if(this.notes){
+      const noteToEdit=this.notes.find((cat: any) => cat.id === id);
+      if(noteToEdit){
+           this.oldCle=noteToEdit.cle;
+           this.oldValeur=noteToEdit.valeur;
+           this.partageIdNoteService.setIdNoteid(id)
+           this.router.navigateByUrl("/editNote");
+      }
+    }
+    
   }
-   
+ 
+  OnAjoute(){
+    this.router.navigateByUrl("\ajouterNote")
+  }
+  OnBackCategories(){
+    this.router.navigateByUrl("\categorie")
+  }
+  rechercherParCle() {
+    if (!this.cleRecherche) {
+      Swal.fire('Champ vide', 'Veuillez entrer une clé de Note pour rechercher', 'warning');
+      return;
+    }
+  
+    this.noteService.rechercheNote(this.cleRecherche).subscribe({
+      next: (data: Note[]) => {
+        if (data.length > 0) {
+          this.cleColor="blue"
+          this.valeurColor="blue"
+          const noteRecherchee = data[0];
+          this.notes = [noteRecherchee, ...this.notes.filter((cat: any) => cat.id !== noteRecherchee.id)];
+          this.updateDisplayeNotes();
+        } else {
+          Swal.fire('Aucun résultat', 'Aucune Note trouvée avec cette clé', 'info');
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de la recherche de la Note :', error);
+      },
+    });
+  }
   
   
   

@@ -8,34 +8,39 @@
      
     <div class="col-md-6 right-box">
        <div class="row align-items-center">
-             <div class="header-text mb-2">
-                  
+             <div class="header-text mb-2 titre">
                   <h3>Modification de la Note</h3>
              </div>
              
              <form [formGroup]="NoteForm" (ngSubmit)="Modifier()">
-             <div class="input-group mb-1">
-                 <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer l'ancien cle du note"> 
+             <div class="input-group mb-1 custom-input">
+                 <input type="text" class="form-control form-control-lg bg-light fs-6" [value]="ancienCle" readonly> 
              </div>
-             <div class="input-group mb-4">
-                 <input  formControlName="cle" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer le neuveau cle de la note">
+             <div class="input-group mb-2 custom-input">
+                 <input  formControlName="newcle" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer le neuveau cle de la note">
              </div>
-             <div class="input-group mb-1">
+             <div *ngIf="NoteForm.get('newcle')?.invalid && NoteForm.get('newcle')?.touched" class="text-danger">
+                La clé est obligatoire.
+              </div>
+             <div class="input-group mb-1 custom-input">
                  
-                <input  type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer l'ancienne valeur de la note">
+                <input  type="text" class="form-control form-control-lg bg-light fs-6" [value]="ancienneValeur" readonly>
             </div>
-            <div class="input-group mb-1">
+            <div class="input-group mb-1 custom-input">
                  
-                <input formControlName="valeur" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer la nouvelle valeur de la note">
+                <input formControlName="newvaleur" type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Entrer la nouvelle valeur de la note">
+                
             </div>
+            <div *ngIf="NoteForm.get('newvaleur')?.invalid && NoteForm.get('newvaleur')?.touched" class="text-danger">
+                La valeur est obligatoire.
+              </div>
              <div class="input-group mb-3 d-flex justify-content-between">   
              </div>
-             <div class="input-group mb-3">
-                 <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Modifier</button>
-             </div>
-             <div class="input-group mb-3">
-                 <button class="btn btn-lg btn-warning w-100 fs-6" (click)="annulerModification()">annuler</button>
-             </div>
+           
+             <div class="d-flex mb-5">
+            <button type="submit" class="btn btn-primary Input">Enregister</button>
+            <button class="btn btn-warning" (click)="annulerModification()">Annuler</button>
+          </div>
              </form>
              
        </div>

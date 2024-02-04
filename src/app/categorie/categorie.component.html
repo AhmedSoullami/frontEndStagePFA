@@ -1,66 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: black;">
+ 
+  <img class="profileDev rounded-circle" src="../../assets/login/profile.png">
+  <div class="monNavButton">
+  <button type="button" class="btn1 " (click)="Profile()">Profile</button>
+<button type="button" class="btn1 " (click)="logout()">LogOut</button></div>
+
+
+</nav>
 <div class="container">
-  <div class="col-md-4">
-    
-    <button type="button" class="btn btn-outline-danger custom-button" (click)="logout()">Déconnexion</button>  </div>
-    <div class="row">
-      <div class="col-md-8">
-        <h2 class="categorie">Categories <img class="imageC" src="../../assets/login/imageC.png"></h2>
-        <table class="table table-striped">   
-  <thead>
-    <tr>
-      <th>Nom de la catégorie</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let categorie of displayedCategories">
-      <td>{{categorie.nomCategorie}}</td>
-      <td>
-        <button class="btn btn-warning" (click)="onEdit(categorie.id)">Modifier</button>
-        
-        <button class="btn btn-primary" (click)="VoirNotes(categorie.id)">Voir Notes</button>
-
-        <button class="btn btn-danger" (click)="onSupprimeCategorie(categorie.id)">Supprimer</button>
-
-      </td>
-    </tr>
-  </tbody>
-        </table>
-        <mat-paginator
-  [length]="categories?.length"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="pageSizeOptions"
-  (page)="onPageChange($event)"
-  pageSizeLabel="categories"
-></mat-paginator>
-      </div>
-            <div class="col-md-4 form-container">
-              <div class="card">
-              <div class="card-header bg-info text-white">
-                <h5>Ajouter une catégorie</h5>
-              </div>
-              <form [formGroup]="categorieForm" (ngSubmit)="createCategorie()">
-                <div class="form-group custom-input">
-                  <label>Nom de la catégorie:</label>
-                  <input type="text" formControlName="nomCategorie" class="form-control" name="nomCategorie" required>
-                  <div *ngIf="categorieForm.get('nomCategorie')?.invalid && (categorieForm.get('nomCategorie')?.dirty || categorieForm.get('nomCategorie')?.touched)">
-                    <div *ngIf="categorieForm.get('nomCategorie')?.hasError('required')" class="text-danger">
-                      Le nom de la catégorie ne peut pas être vide.
-                    </div>
-                    <div *ngIf="categoryExists" class="text-danger">
-                      Le nom de la catégorie existe déjà.
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-success">Ajouter</button>
-              </form>
-            </div>
-          </div>
-      </div>
+  <div class="row">
+    <div class="col-md-4">
+      <img src="../../assets/login/LogoCNM.png" class="custom-image rotate">
     </div>
- 
- 
-  
-  
-
-
+    <div class="col-md-8" style="position: relative; top: 45px;">
+      <div class="categorie-container">
+        <h2 class="categorie">Categories <img class="imageC" src="../../assets/login/imageC.png"></h2>
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Entrer le nom de la categorie"
+          [(ngModel)]="nomCategorieRecherche"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="rechercherCategorie()"
+          >
+            Rechercher
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" (click)="onAjouter()">Add Categorie</button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nom de la catégorie</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categorie of displayedCategories;let i = index">
+            <td [ngStyle]="{'color': i === 0 ? nomCategorieColor : 'black'}">{{ categorie.nomCategorie }}</td>
+            
+            <td>
+              <button class="btn btn-warning input-button" (click)="onEdit(categorie.id)">Modifier</button>
+              <button class="btn btn-primary input-button" (click)="VoirNotes(categorie.id)">Voir Notes</button>
+              <button class="btn btn-danger input-button" (click)="onSupprimeCategorie(categorie.id)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator
+        [length]="categories?.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)"
+        pageSizeLabel="categories"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

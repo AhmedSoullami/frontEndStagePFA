@@ -1,0 +1,37 @@
+<nav class="nav mb-4">
+  <div class="cnm">
+    <h4 class="centered-text">Consult Network Market</h4>
+  </div> 
+  <div class="btn-container">
+    <button type="button" class="btn" (click)="Categories()">Categories</button>
+    <button type="button" class="btn" (click)="ModifierPassword()">Password</button>
+  </div> 
+</nav>  
+  <div class="container"> 
+    <div *ngIf="userDetails" >
+      <div class="center-image mb-5">
+        <img src="../../assets/login/web-development.png" alt="Web Development" class="image-size">
+      </div>
+    <div class="card mb-4 custom-card">
+      <div class="card-body">
+        <div class="center-container">
+          <h2 class="infos mb-4">Informations de l'utilisateur</h2>
+          <div class="card mb-5 card1"><p><strong style="color: rgb(53, 96, 159);">Email:</strong> {{ userDetails.sub.split(',')[1] }}</p></div>
+          
+              <div class="center-container">
+                <div class="card card2"><p><strong  style="color:  rgb(53, 96, 159);">Nombre de categories:</strong> {{ numberOfCategories }}</p></div>
+                
+              </div>
+           
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <div *ngIf="!userDetails">
+      <p>Impossible de récupérer les informations de l'utilisateur.</p>
+    </div>
+    
+   
+  </div>
+  

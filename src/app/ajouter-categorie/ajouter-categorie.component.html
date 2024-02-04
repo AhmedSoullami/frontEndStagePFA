@@ -1,0 +1,34 @@
+<div class="container py-5 h-100" style="margin-top: 80px;">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-7">
+        <div class="card shadow-1-strong" style="border-radius: 1rem;">
+          <div class="card-body p-4 text-center d-flex align-items-center">
+            
+              <img class="image" src="../../assets/login/categorieWeb.png" >
+              <h2 class="ml-3 text" style="position: relative; left: 7px;">Ajouter une Categorie</h2>
+            
+          </div>
+          
+          <div>
+            <form [formGroup]="categorieForm" (ngSubmit)="createCategorie()">
+              <div class="form-outline mb-4 custom-input">
+                <label>Nom de la catégorie:</label>
+                <input type="text" formControlName="nomCategorie" class="form-control" name="nomCategorie" required>
+                <div *ngIf="categorieForm.get('nomCategorie')?.invalid && (categorieForm.get('nomCategorie')?.dirty || categorieForm.get('nomCategorie')?.touched)">
+                  <div *ngIf="categorieForm.get('nomCategorie')?.hasError('required')" class="text-danger">
+                    Le nom de la catégorie ne peut pas être vide.
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="d-flex mb-5">
+                <button type="submit" class="btn btn-outline-primary">Ajouter</button>
+                <button class="btn btn-outline-secondary" (click)="onAnnule()">Annuler</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

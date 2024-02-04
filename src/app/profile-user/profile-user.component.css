@@ -1,0 +1,65 @@
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100px ; 
+    width: 100px;
+    margin-left: 45%;
+}
+.image-size {
+    width: 90%; 
+    height: auto;
+  }
+  .center-container {
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    color:black;
+  }
+  .centered-text {
+   
+   margin-top: 13px;
+    text-align: center;
+    color:rgb(45, 43, 38);
+  }
+  .nav{
+    background-color:rgb(127, 192, 160);
+    height: 60px;
+  }
+  
+  .btn-container {
+    display: flex;
+    align-items: center; 
+    margin-left: 700px;
+  }
+  
+  .btn {
+    background-color: lightblue;
+    border: none;
+    border-radius: 50px;
+    margin-right: 10px;
+  }
+  .btn:hover{
+    box-shadow: 0 0 5px   rgb(242, 250, 252),0 0 25px  rgb(242, 250, 252),
+    0 0 50px  rgb(242, 250, 252),0 0 100px  rgb(242, 250, 252);
+  }
+  
+  .custom-card {
+    margin-left: 110px;
+    width: 900px; 
+    height: 250px; 
+    background-color: rgb(146, 192, 144);
+  
+  }
+  .card1{
+    width: 900px; 
+  }
+  .card2{
+    width: 900px;
+  }
+  
+  
+  
